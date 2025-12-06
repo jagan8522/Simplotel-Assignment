@@ -173,6 +173,7 @@ body{
 }
 
 .content-box h3 {
+  
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -188,7 +189,7 @@ body{
 
    .menu-icon {
        display: block;
-       margin-left: auto;
+       margin-right: auto;
    }
 
    .nav-links {
@@ -236,17 +237,20 @@ body{
 @media (max-width: 768px) {
     .nav-links {
         gap: 30px;
-  }
+    }
     .hero {
         flex-direction: column;
         text-align: center;
         padding: 0 20px;
-  }
+        padding-top: 40px;
+        margin: 10px auto !important;
+    }
 
     .hero-text,
     .hero-img {
         width: 100%;
-  }
+    }
+
     .hero-text h1{
         padding-top: 30px;
     }
@@ -268,8 +272,22 @@ body{
     }
 }
 
+
 @media (min-width: 1024px){
     .image-content-section{
-      padding-bottom: 50px;
+        padding-bottom: 50px;
+    }
+    .hero-img img{
+      height: 520px;
+    }
+}
+
+
+@media (min-width: 1028px){
+    .image-content-section{
+      padding-bottom: 91px;
+    }
+    .hero-img img{
+      height: 590px;
     }
 }
