@@ -7,3 +7,5 @@ All notable changes will be listed here.
 
 ### 🚀 Updates
 - Minor internal changes
+
+## ✨ v1.0.3 – What’s New
