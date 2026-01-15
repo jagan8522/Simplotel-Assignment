@@ -21,56 +21,26 @@ jobs:
 
           echo "" >> CHANGELOG.md
           echo "## ✨ $TAG – What’s New" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo "### 🚀 Updates" >> CHANGELOG.md
 
-          # -------- FEATURES (enhancement) --------
-          FEATURES=$(echo "$BODY" | sed -n '/Features/,/###/p' \
-            | grep -E '^[*-] ' \
-            | sed 's/^[*-] //' \
+          # 🔑 Extract PR titles from ALL GitHub release formats
+          PR_TITLES=$(echo "$BODY" \
+            | grep -E "(#|pull/)[0-9]+" \
+            | sed 's/^[-* ]*//' \
             | sed 's/ by @.*//' \
-            | sed 's| in https://github.com.*||')
+            | sed 's/ in #.*//' \
+            | sed 's| in https://github.com.*||' \
+            | sed 's/ *(#.*)//')
 
-          if [ -n "$FEATURES" ]; then
-            echo "" >> CHANGELOG.md
-            echo "### 🚀 New Features" >> CHANGELOG.md
-            COUNT=1
+          COUNT=1
+          if [ -n "$PR_TITLES" ]; then
             while IFS= read -r line; do
               echo "$COUNT) $line" >> CHANGELOG.md
-              COUNT=$((COUNT+1))
-            done <<< "$FEATURES"
-          fi
-
-          # -------- DOCUMENTATION --------
-          DOCS=$(echo "$BODY" | sed -n '/Documentation/,/###/p' \
-            | grep -E '^[*-] ' \
-            | sed 's/^[*-] //' \
-            | sed 's/ by @.*//' \
-            | sed 's| in https://github.com.*||')
-
-          if [ -n "$DOCS" ]; then
-            echo "" >> CHANGELOG.md
-            echo "### 📄 Documentation" >> CHANGELOG.md
-            COUNT=1
-            while IFS= read -r line; do
-              echo "$COUNT) $line" >> CHANGELOG.md
-              COUNT=$((COUNT+1))
-            done <<< "$DOCS"
-          fi
-
-          # -------- BUG FIXES --------
-          BUGS=$(echo "$BODY" | sed -n '/Bug Fixes/,/###/p' \
-            | grep -E '^[*-] ' \
-            | sed 's/^[*-] //' \
-            | sed 's/ by @.*//' \
-            | sed 's| in https://github.com.*||')
-
-          if [ -n "$BUGS" ]; then
-            echo "" >> CHANGELOG.md
-            echo "### 🐛 Bug Fixes" >> CHANGELOG.md
-            COUNT=1
-            while IFS= read -r line; do
-              echo "$COUNT) $line" >> CHANGELOG.md
-              COUNT=$((COUNT+1))
-            done <<< "$BUGS"
+              COUNT=$((COUNT + 1))
+            done <<< "$PR_TITLES"
+          else
+            echo "1) Minor internal improvements" >> CHANGELOG.md
           fi
 
       - name: Commit and push changelog
@@ -80,5 +50,6 @@ jobs:
           git add CHANGELOG.md
           git commit -m "Update changelog for clients (${{ github.event.release.tag_name }})" || echo "No changes"
           git push origin ${{ github.event.release.target_commitish }}
+
 
 
