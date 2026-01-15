@@ -14,3 +14,8 @@ All notable changes will be listed here.
 
 ### 🚀 Updates
 1) Minor internal improvements
+
+## ✨ v1.0.6 – What’s New
+
+### 🚀 Updates
+1) now clints can see that what has be updated
