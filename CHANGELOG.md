@@ -29,3 +29,9 @@ All notable changes will be listed here.
 
 ### 🚀 Updates
 1) Fix layout issue on client page
+
+## ✨ v1.0.9 – What’s New
+
+### 🚀 Updates
+1) input button is added in file
+2) updated the document
