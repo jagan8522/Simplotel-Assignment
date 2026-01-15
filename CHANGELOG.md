@@ -49,3 +49,5 @@ All notable changes will be listed here.
 
 ### 📄 Documentation
 1) updated the document file for clint
+
+## ✨ v1.1.2 – What’s New
