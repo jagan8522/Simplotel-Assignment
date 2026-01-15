@@ -35,3 +35,9 @@ All notable changes will be listed here.
 ### 🚀 Updates
 1) input button is added in file
 2) updated the document
+
+## ✨ v1.1.0 – What’s New
+
+### 🚀 Updates
+1) updated the home page 
+2) added new futures in readme file
