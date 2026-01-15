@@ -6,3 +6,5 @@ changing the files
 
 
 Update client view documentation
+
+Fix layout issue on client page
