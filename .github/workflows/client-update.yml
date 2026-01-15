@@ -1,0 +1,76 @@
+name: Client Update Automation
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.target_commitish }}
+
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Generate client changelog
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.release.tag_name }}"
+          BODY="${{ github.event.release.body }}"
+          REPO="${{ github.repository }}"
+
+          FEATURES=()
+          DOCS=()
+          BUGS=()
+
+          PR_NUMBERS=$(echo "$BODY" | grep -oE '/pull/[0-9]+' | awk -F/ '{print $NF}')
+
+          for PR in $PR_NUMBERS; do
+            PR_DATA=$(curl -s \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$REPO/pulls/$PR")
+
+            TITLE=$(echo "$PR_DATA" | jq -r '.title')
+            LABELS=$(echo "$PR_DATA" | jq -r '.labels[].name')
+
+            if echo "$LABELS" | grep -qi "feature"; then FEATURES+=("$TITLE"); fi
+            if echo "$LABELS" | grep -qi "documentation"; then DOCS+=("$TITLE"); fi
+            if echo "$LABELS" | grep -qi "bug"; then BUGS+=("$TITLE"); fi
+          done
+
+          echo "" >> CHANGELOG.md
+          echo "## ✨ $TAG – What’s New" >> CHANGELOG.md
+
+          if [ ${#FEATURES[@]} -gt 0 ]; then
+            echo "### 🚀 New Features" >> CHANGELOG.md
+            COUNT=1
+            for ITEM in "${FEATURES[@]}"; do
+              echo "$COUNT) $ITEM" >> CHANGELOG.md
+              COUNT=$((COUNT+1))
+            done
+          fi
+
+          if [ ${#DOCS[@]} -gt 0 ]; then
+            echo "### 📄 Documentation" >> CHANGELOG.md
+            for ITEM in "${DOCS[@]}"; do echo "- $ITEM" >> CHANGELOG.md; done
+          fi
+
+          if [ ${#BUGS[@]} -gt 0 ]; then
+            echo "### 🐛 Bug Fixes" >> CHANGELOG.md
+            for ITEM in "${BUGS[@]}"; do echo "- $ITEM" >> CHANGELOG.md; done
+          fi
+
+      - name: Commit and push changelog
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add CHANGELOG.md
+          git commit -m "Update changelog for clients (${{ github.event.release.tag_name }})" || echo "No changes"
+          git push origin ${{ github.event.release.target_commitish }}
