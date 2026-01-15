@@ -13,4 +13,4 @@ Fix layout issue on client page
 <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
 
-<img src="./images/menu-bar.png" class="menu-icon" id="menuIcon" alt="menu">
+updated the clint view and site
