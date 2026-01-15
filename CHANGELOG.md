@@ -9,3 +9,8 @@ All notable changes will be listed here.
 - Minor internal changes
 
 ## ✨ v1.0.3 – What’s New
+
+## ✨ v1.0.5 – What’s New
+
+### 🚀 Updates
+1) Minor internal improvements
