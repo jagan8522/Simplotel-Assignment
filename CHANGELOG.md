@@ -41,3 +41,11 @@ All notable changes will be listed here.
 ### 🚀 Updates
 1) updated the home page 
 2) added new futures in readme file
+
+## ✨ v1.1.1 – What’s New
+
+### 🚀 New Features
+1) updated the clint view site
+
+### 📄 Documentation
+1) updated the document file for clint
