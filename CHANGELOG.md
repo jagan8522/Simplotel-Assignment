@@ -51,3 +51,11 @@ All notable changes will be listed here.
 1) updated the document file for clint
 
 ## ✨ v1.1.2 – What’s New
+
+## ✨ v1.1.3 – What’s New
+
+### 🚀 New Features
+1) fallback LLM check
+
+### 📄 Documentation
+1) document is updated
