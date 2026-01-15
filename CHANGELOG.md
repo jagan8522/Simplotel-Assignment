@@ -59,3 +59,5 @@ All notable changes will be listed here.
 
 ### 📄 Documentation
 1) document is updated
+
+## ✨ v1.1.4 – What’s New
