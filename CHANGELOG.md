@@ -19,3 +19,8 @@ All notable changes will be listed here.
 
 ### 🚀 Updates
 1) now clints can see that what has be updated
+
+## ✨ v1.0.7 – What’s New
+
+### 🚀 Updates
+1) Update client view documentation
