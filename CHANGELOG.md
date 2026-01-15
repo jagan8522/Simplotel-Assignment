@@ -24,3 +24,8 @@ All notable changes will be listed here.
 
 ### 🚀 Updates
 1) Update client view documentation
+
+## ✨ v1.0.8 – What’s New
+
+### 🚀 Updates
+1) Fix layout issue on client page
